@@ -1,0 +1,2 @@
+Crie uma classe Aluno que represente um aluno e uma classe 
+CadastroAlunos que permita cadastrar e exibir informações dos alunos.

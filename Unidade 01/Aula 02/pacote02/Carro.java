@@ -1,10 +1,12 @@
 package pacote02;
 
 public class Carro {
+    //atributos
     public String marca;
     protected String modelo;
     private String cor;
 
+    //getters
     public String getMarca() {
         return marca;
     }
@@ -15,6 +17,7 @@ public class Carro {
         return cor;
     }
 
+    //setters
     public void setMarca(String marca) {
         this.marca = marca;
     }

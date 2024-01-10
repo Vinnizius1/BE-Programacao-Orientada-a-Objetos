@@ -5,7 +5,7 @@ public class Carro {
     private int ano;
     public String cor;
 
-    //Construtor
+    //Construtores
     public Carro() {
         this.marca = "Indefinido";
         this.modelo = "Indefinido";

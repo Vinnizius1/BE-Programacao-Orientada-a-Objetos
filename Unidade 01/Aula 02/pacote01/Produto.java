@@ -1,10 +1,12 @@
 package pacote01;
 
 public class Produto {
+    //atributos
     public String nome;
     protected Double preco;
     private Double peso;
 
+    //getters
     public String getNome() {
         return nome;
     }
@@ -14,6 +16,8 @@ public class Produto {
     public Double getPeso() {
         return peso;
     }
+
+    //setters
     public void setNome(String nome) {
         this.nome = nome;
     }

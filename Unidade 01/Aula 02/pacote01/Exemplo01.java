@@ -3,7 +3,9 @@ package pacote01;
 import pacote02.Carro;
 
 public class Exemplo01 {
+    //metodo main
     public static void main(String[] args){
+        //instanciando os objetos
         Pessoa pessoa = new Pessoa();
         Produto produto = new Produto();
         Carro carro = new Carro();

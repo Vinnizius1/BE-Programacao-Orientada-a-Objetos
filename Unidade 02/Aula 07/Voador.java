@@ -1,0 +1,3 @@
+interface Voador{
+    void voar();
+}

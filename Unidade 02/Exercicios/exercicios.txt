@@ -1,0 +1,19 @@
+1 - Crie uma classe Veiculo com atributos como modelo e ano. Em seguida, crie duas subclasses, Carro e Moto, que herdam de Veiculo, cada um deve possuir pelo menos 2 atributos e um metodo a mais.
+
+2 - Desenvolva uma hierarquia de classes representando animais, começando com uma classe base Animal e subclasses como Mamifero, Ave e Peixe.
+
+3 - Implemente uma classe ContaBancaria com atributos como saldo e número da conta. Em seguida, crie duas subclasses, ContaCorrente e ContaPoupanca, que herdam de ContaBancaria.
+
+4 - Utilizando as classes Carro e Moto do exercício 1, crie um método na classe base Veiculo chamado imprimirInformacoes que seja sobrescrito nas subclasses para exibir informações específicas de cada veículo.
+
+5 - Adicione um método emitirSom à classe base Animal do exercício 2. Sobrescreva esse método nas subclasses para emitir sons específicos de cada tipo de animal.
+
+6 - Crie um exemplo de polimorfismo por sobrecarga, criando uma classe Calculadora que tenha métodos para as 4 operações básicas (soma, subtração, multiplicação, divisão) aceitando diferentes tipos de parâmetros.
+
+7 - Crie uma classe FormaGeometrica com métodos para calcular área e perímetro. Em seguida, crie subclasses como Circulo, Retangulo e triangulo que herdam de FormaGeometrica e implementam esses métodos.
+
+8 - Utilize a hierarquia de classes de animais do exercício 2 para criar uma lista de animais. Em seguida, percorra a lista chamando o método emitirSom de cada animal
+
+9 - Expanda a classe ContaBancaria do exercício 3 adicionando um método chamado aplicarJuros, que é implementado de maneira diferente nas subclasses ContaCorrente e ContaPoupanca, com valores de 15% na conta corrente e de 6,5% na conta poupança.
+
+10 - Crie uma interface Autenticavel com um método autenticar. Implemente essa interface nas classes Usuario e Administrador. Em seguida, crie uma lista de objetos que implementam Autenticavel e chame o método autenticar para cada um.

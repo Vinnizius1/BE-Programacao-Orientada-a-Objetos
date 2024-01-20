@@ -7,7 +7,7 @@ public class ContaPoupanca extends ContaBancaria{
 
     @Override
     public double consultarSaldo() {
-        double saldoAtual = saldo;
+        double saldoAtual = getSaldo();
         System.out.println("Saldo atual: R$"+saldoAtual);
         System.out.println("Rendendo a: "+JUROS_POUCANCA*100+"% ao ano");
         return saldoAtual;
@@ -15,8 +15,8 @@ public class ContaPoupanca extends ContaBancaria{
 
     public void aplicarJurosMensal(){
         double jurosMensal = JUROS_POUCANCA/12;
-        double juros = saldo * jurosMensal;
-        saldo += juros;
+        double juros = getSaldo() * jurosMensal;
+        setSaldo(getSaldo() + juros);
         super.consultarSaldo();
     }
     

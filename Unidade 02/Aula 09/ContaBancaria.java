@@ -1,13 +1,16 @@
 public class ContaBancaria implements OperacoesBancarias {
-    protected String nagencia;
-    protected String nconta;
-    protected double saldo;
+    private String nagencia;
+    private String nconta;
+    private double saldo;
 
     public String getNagencia() {
         return nagencia;
     }
     public String getNconta() {
         return nconta;
+    }
+    public double getSaldo() {
+        return saldo;
     }
 
     public void setNagencia(String nagencia) {
@@ -16,34 +19,36 @@ public class ContaBancaria implements OperacoesBancarias {
     public void setNconta(String nconta) {
         this.nconta = nconta;
     }
+    public void setSaldo(double saldo) {
+        this.saldo = saldo;
+    }
 
     public ContaBancaria(String nagencia, String nconta, double saldo){
         this.nagencia = nagencia;
         this.nconta = nconta;
         this.saldo = saldo;
     }
-
-    @Override
-    public void depositar(double valor) {
-        saldo += valor;
+    
+    protected void imprimirOperacao(String operacao, double valor){
         System.out.println();
-        System.out.println("---- Operação de Depósito ----");
-        System.out.println("Valor depositado: R$"+ valor);
+        System.out.println("---- Operação de "+ operacao +" ----");
+        System.out.println("Valor "+ operacao.toLowerCase() +": R$"+ valor);
         System.out.println("Saldo atual: R$"+saldo);
         System.out.println("------------------------------");
         System.out.println();
     }
 
     @Override
+    public void depositar(double valor) {
+        saldo += valor;
+        imprimirOperacao("Depósito", valor);
+    }
+
+    @Override
     public void sacar(double valor) {
         if (valor <= saldo) {
             saldo -= valor;
-            System.out.println();
-            System.out.println("---- Operação de Saque ----");
-            System.out.println("Valor sacado: R$"+ valor);
-            System.out.println("Saldo atual: R$"+saldo);
-            System.out.println("------------------------------");
-            System.out.println();
+            imprimirOperacao("Saque", valor);
         }else{
             System.out.println("Saldo insuficiente para a operação! Tente outro valor.");
         }

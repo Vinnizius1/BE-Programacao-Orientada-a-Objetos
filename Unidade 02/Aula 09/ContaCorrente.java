@@ -10,25 +10,15 @@ public class ContaCorrente extends ContaBancaria{
 
     @Override
     public void sacar(double valor) {
-        double saldoAtual = saldo;
+        double saldoAtual = getSaldo();
         if(valor <= saldoAtual + limite){
             if (valor <= saldoAtual){
-                saldo -= valor;
-                System.out.println();
-                System.out.println("---- Operação de Saque ----");
-                System.out.println("Valor sacado: R$"+ valor);
-                System.out.println("Saldo atual: R$"+saldo);
-                System.out.println("------------------------------");
-                System.out.println();
+                setSaldo(saldoAtual -=valor);
+                imprimirOperacao("Saque", valor);
             }else{
                 limite -= (valor - saldoAtual);
-                saldo -= saldoAtual;
-                System.out.println();
-                System.out.println("---- Operação de Saque ----");
-                System.out.println("Valor sacado: R$"+ valor);
-                System.out.println("Saldo atual: R$"+saldo);
-                System.out.println("------------------------------");
-                System.out.println();
+                setSaldo(saldoAtual -= valor);
+                imprimirOperacao("Saque", valor);
             }    
         }else{
             System.out.println("Saldo + limite insuficiente para a operação! Tente outro valor.");
@@ -41,7 +31,7 @@ public class ContaCorrente extends ContaBancaria{
     }
 
     public void ExecutarTaxa(){
-        saldo -= TAXA_MANUTENCAO;
+        setSaldo(getSaldo() - TAXA_MANUTENCAO);
         System.out.println("Taxa de manutenção executada!");
     }
     

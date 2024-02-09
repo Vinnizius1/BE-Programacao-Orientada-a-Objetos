@@ -1,0 +1,25 @@
+Exercícios de lançamento de exceção:
+
+1 - Escreva um método em Java que receba dois números como parâmetros e lance uma exceção se o segundo número for zero.
+
+2 - Crie uma classe ConversorTemperatura com um método converterCelsiusParaFahrenheit(double temperaturaCelsius). Este método deve lançar uma exceção do tipo IllegalArgumentException se a temperatura Celsius fornecida for menor que -273.15, que é o zero absoluto em Celsius. Implemente um programa que utilize esta classe para converter uma temperatura Celsius em Fahrenheit e capture a exceção, caso ocorra, fornecendo uma mensagem de erro adequada.
+
+3 - Implemente uma classe Idade que tenha um método verificarIdade(int idade) que lança uma exceção se a idade for menor que 0 ou maior que 150.
+
+Exercícios de captura de exceção:
+
+4 - Escreva um programa que solicite ao usuário que insira um número e o divida por zero. Utilize um bloco try-catch para capturar a exceção ArithmeticException e exiba uma mensagem amigável ao usuário.
+
+5 - Crie um método que leia um arquivo em Java e capture a exceção FileNotFoundException caso o arquivo não seja encontrado.
+
+6 - Implemente um programa que converta uma string em um número inteiro. Utilize um bloco try-catch para capturar a exceção NumberFormatException caso a string não seja um número válido.
+
+Exercícios de exceções personalizadas:
+
+7 - Crie uma exceção personalizada chamada SaldoInsuficienteException que é lançada quando uma tentativa de retirar mais dinheiro de uma conta do que o saldo disponível é feita.
+
+8 - Implemente uma classe ValidadorSenha que contenha um método validarSenha(String senha) que lança uma exceção personalizada SenhaInvalidaException se a senha não atender aos critérios de segurança (por exemplo, se for muito curta).
+
+9 - Desenvolva uma aplicação bancária simples com uma classe ContaBancaria que tenha um método transferir que lança uma exceção personalizada TransferenciaInvalidaException se a quantia a ser transferida for menor ou igual a zero.
+
+10 - Crie uma classe DivisaoInteira com um método que execute uma divisão inteira entre dois números e lance uma exceção personalizada DivisaoInteiraInvalidaException se a divisão não for exata.

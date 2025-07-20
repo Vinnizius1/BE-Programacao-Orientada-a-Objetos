@@ -13,8 +13,11 @@ public class Main {
     // As outras 2 listas
     private static List<Pessoa> clientes = new ArrayList<>();
     private static List<Venda> vendas = new ArrayList<>();
-    
+
     public static void main(String[] args) {
+
+
+        /*  */
         // Adicionando alguns veículos para teste inicial
         veiculos.add(new Carro("Chevrolet", "Onix", 2015, "Prata", 45000, 38000, 4, "Flex", 280));
         veiculos.add(new Moto("Honda", "CB 500", 2020, "Vermelha", 32000, 29500, 500, true, "Naked"));
@@ -26,6 +29,7 @@ public class Main {
         clientes.add(new Pessoa("João Silva", 30, "Rua A, 123", "11999999999", "joao@mail.com", 1.90, 100));
         // Testando o novo Cliente com biotipo "pequeno"
         clientes.add(new Pessoa("Maria Oliveira", 25, "Rua B, 456", "11988888888", "maria@mail.com", 1.60, 60));
+        /*  */
 
 
         // Força o Scanner a usar o padrão US (ponto como separador decimal)
@@ -112,25 +116,28 @@ public class Main {
             // Regra de Biotipo: consideramos "grande" se for alto OU pesado.
             boolean clienteGrande = cliente.getAltura() >= 1.85 || cliente.getPeso() >= 95;
 
+            // NOVA LISTA: Veículos sugeridos com base no biotipo
             List<Veiculo> veiculosSugeridos = new ArrayList<>();
+            
             for (Veiculo veiculo : veiculos) {
                 // A palavra-chave 'instanceof' verifica o tipo real do objeto
-                if (veiculo instanceof Caminhao) {
-                    // Caminhões são sempre grandes, ideais para biotipos maiores.
-                    if (clienteGrande) {
-                        veiculosSugeridos.add(veiculo);
-                    }
-                } else if (veiculo instanceof Carro) {
-                    // Precisamos fazer um "cast" para acessar os métodos específicos de Carro
-                    Carro carro = (Carro) veiculo;
+                // A partir do Java 16, podemos usar "Pattern Matching" para simplificar o código.
+                // Ele combina o 'instanceof' e o 'cast' em uma única linha.
+                if (veiculo instanceof Caminhao && clienteGrande) {
+                    // Não precisamos de cast aqui. A lógica para o caminhão não exige
+                    // o acesso a nenhum método ou atributo específico da classe `Caminhao`.
+                    // Apenas adicionamos o `veiculo` genérico à lista, o que é suficiente.
+                    veiculosSugeridos.add(veiculo);
+                } else if (veiculo instanceof Carro carro) {
+                    // A variável 'carro' já está declarada e pronta para uso
                     // Carros com porta-malas grande (>=450L) são considerados maiores/SUVs
                     if (clienteGrande && carro.getCapacidadePortaMalas() >= 450) {
                         veiculosSugeridos.add(carro);
                     } else if (!clienteGrande && carro.getCapacidadePortaMalas() < 450) {
                         veiculosSugeridos.add(carro);
                     }
-                } else if (veiculo instanceof Moto) {
-                    Moto moto = (Moto) veiculo;
+                } else if (veiculo instanceof Moto moto) {
+                    // O mesmo para a moto.
                     // Motos com mais de 500cc são consideradas maiores/mais robustas
                     if (clienteGrande && moto.getCilindradas() >= 500) {
                         veiculosSugeridos.add(moto);
@@ -159,8 +166,8 @@ public class Main {
         if (!veiculos.isEmpty()) {
             System.out.println("### Lista de Veículos em Estoque ###");
             int x = 1;
-            // Graças ao polimorfismo, o Java sabe qual `exibirInformacoes` chamar
-            // (se é de Carro, Moto ou Caminhao).
+
+            // Graças ao polimorfismo, o Java sabe qual `exibirInformacoes` chamar (se é de Carro, Moto ou Caminhao).
             for (Veiculo veiculo : veiculos) {
                 System.out.println("--- Veículo " + x + " ---");
                 veiculo.exibirInformacoes();

@@ -113,19 +113,19 @@ public class Main {
 
             System.out.println("\nAnalisando o biotipo de " + cliente.getNome() + " (Altura: " + cliente.getAltura() + "m, Peso: " + cliente.getPeso() + "kg) para sugerir veículos...");
 
-            // Regra de Biotipo: consideramos "grande" se for alto OU pesado.
+            // REGRA de Biotipo: consideramos "grande" se for alto OU pesado. 
             boolean clienteGrande = cliente.getAltura() >= 1.85 || cliente.getPeso() >= 95;
 
             // NOVA LISTA: Veículos sugeridos com base no biotipo
             List<Veiculo> veiculosSugeridos = new ArrayList<>();
             
+            // Percorre a lista de veículos e aplica as regras de sugestão
+            // Usamos o polimorfismo para lidar com diferentes tipos de veículos
             for (Veiculo veiculo : veiculos) {
                 // A palavra-chave 'instanceof' verifica o tipo real do objeto
-                // A partir do Java 16, podemos usar "Pattern Matching" para simplificar o código.
-                // Ele combina o 'instanceof' e o 'cast' em uma única linha.
+                // A partir do Java 16, podemos usar "Pattern Matching" para simplificar o código. Ele combina o 'instanceof' e o 'cast' em uma única linha.
                 if (veiculo instanceof Caminhao && clienteGrande) {
-                    // Não precisamos de cast aqui. A lógica para o caminhão não exige
-                    // o acesso a nenhum método ou atributo específico da classe `Caminhao`.
+                    // Não precisamos de cast aqui, pois a lógica para o caminhão não exige o acesso a nenhum método ou atributo específico da classe `Caminhao`.
                     // Apenas adicionamos o `veiculo` genérico à lista, o que é suficiente.
                     veiculosSugeridos.add(veiculo);
                 } else if (veiculo instanceof Carro carro) {
@@ -307,28 +307,46 @@ public class Main {
                 mostrarClientes();
                 Pessoa comprador = clientes.get(scanner.nextInt()-1);
                 scanner.nextLine();
-
-                System.out.print("Informe o valor da venda: R$");
-                double valor = scanner.nextDouble();
-                scanner.nextLine();
-
+                
                 System.out.println("Qual veículo deseja vender? (Escolha pelo número)");
                 mostrarVeiculos(); // Mostra todos os veículos disponíveis
                 int indiceVeiculo = scanner.nextInt() - 1;
-
+                
                 // LANÇANDO NOSSA EXCEÇÃO PERSONALIZADA
                 if (indiceVeiculo < 0 || indiceVeiculo >= veiculos.size()) {
                     throw new VeiculoNaoEncontradoException("Seleção inválida. O veículo número " + (indiceVeiculo + 1) + " não existe no estoque.");
                 }
                 scanner.nextLine();
-
+                
                 Veiculo veiculoParaVenda = veiculos.get(indiceVeiculo); // Agora esta linha é segura porque já verificamos o índice
 
-                // Criando a venda e adicionando na lista de vendas
-                vendas.add(new Venda(veiculoParaVenda, comprador, valor, LocalDateTime.now()));
-                veiculos.remove(indiceVeiculo); // Remove da lista unificada
+                // Exibindo informações cruciais para o vendedor antes da negociação
+                System.out.println("\n--- Informações para Negociação ---");
+                System.out.printf("Veículo Selecionado: %s %s\n", veiculoParaVenda.getMarca(), veiculoParaVenda.getModelo());
+                System.out.printf("Preço de Tabela: R$%.2f\n", veiculoParaVenda.getPreco());
+                System.out.printf("Preço de Custo: R$%.2f\n", veiculoParaVenda.getPrecoDeCusto());
+                System.out.println("------------------------------------");
 
-                System.out.println("Venda executada com sucesso!");
+                double valorFinalVenda;
+                boolean vendaConfirmada = false;
+
+                do {
+                    System.out.print("\nInforme o valor proposto para a venda: R$");
+                    valorFinalVenda = scanner.nextDouble();
+                    scanner.nextLine();
+
+                    double resultado = valorFinalVenda - veiculoParaVenda.getPrecoDeCusto();
+                    System.out.printf("Resultado da operação: %s de R$%.2f\n", (resultado >= 0 ? "Lucro" : "Prejuízo"), resultado);
+
+                    System.out.print("Confirmar esta venda? (S/N): ");
+                    String confirmacao = scanner.nextLine();
+                    if (confirmacao.equalsIgnoreCase("S")) {
+                        vendaConfirmada = true;
+                        vendas.add(new Venda(veiculoParaVenda, comprador, valorFinalVenda, LocalDateTime.now()));
+                        veiculos.remove(indiceVeiculo);
+                        System.out.println("\n>> Venda executada com sucesso! <<");
+                    }
+                } while (!vendaConfirmada);
             }
         }catch (InputMismatchException e){
             System.out.println("Erro: Entrada invalida. Certifique-se de inserir os dados corretamente!");
@@ -398,14 +416,26 @@ public class Main {
         }else{
             System.out.println("### Relatorio de vendas ###");
             System.out.println();
+            // O formatador de data só precisa ser criado uma vez, fora do loop.
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
+
             for (Venda venda : vendas) {
-               DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
-               double lucro = venda.getValor() - venda.getVeiculo().getPrecoDeCusto();
+               Veiculo veiculoVendido = venda.getVeiculo();
+               double valorVenda = venda.getValor();
+               double custoVeiculo = veiculoVendido.getPrecoDeCusto();
+               double resultado = valorVenda - custoVeiculo;
+
                System.out.println("Data: "+ venda.getDataVenda().format(formatter));
-               System.out.println("Veiculo: "+venda.getVeiculo().getModelo()+" - "+venda.getVeiculo().getAno());
+               System.out.println("Veiculo: "+veiculoVendido.getModelo()+" - "+veiculoVendido.getAno());
                System.out.println("Comprador: "+venda.getComprador().getNome()+" - "+venda.getComprador().getTelefone());
-               System.out.printf("Valor da venda: R$%.2f\n", venda.getValor());
-               System.out.printf("Lucro/Prejuízo: R$%.2f\n", lucro);
+               System.out.printf("Valor da venda: R$%.2f\n", valorVenda);
+               System.out.printf("Custo do veículo: R$%.2f\n", custoVeiculo); // Adicionado para clareza
+
+               if (resultado >= 0) {
+                   System.out.printf("Lucro: R$%.2f\n", resultado);
+               } else {
+                   System.out.printf("Prejuízo: R$%.2f\n", resultado);
+               }
                System.out.println("----------------------------------------------------------------"); 
                System.out.println();
             }

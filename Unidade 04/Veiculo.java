@@ -4,15 +4,22 @@ public class Veiculo implements InterfaceVeiculo{
     private int ano;
     private String cor;
     private double preco;
+    private double precoDeCusto; // NOVO ATRIBUTO
     private int velocidade;
 
-    public Veiculo(String marca, String modelo, int ano, String cor, double preco){
+    public Veiculo(String marca, String modelo, int ano, String cor, double preco, double precoDeCusto){
         this.marca = marca;
         this.modelo = modelo;
         this.ano = ano;
         this.cor = cor;
         this.preco = preco;
+        this.precoDeCusto = precoDeCusto;
         this.velocidade = 0;
+    }
+
+    // Getter para o novo atributo
+    public double getPrecoDeCusto() {
+        return precoDeCusto;
     }
 
     public String getMarca() {
@@ -82,7 +89,7 @@ public class Veiculo implements InterfaceVeiculo{
         System.out.println("Modelo: "+modelo);
         System.out.println("Ano:    "+ano);
         System.out.println("Cor:    "+cor);
-        System.out.println("Preço:  "+preco);
+        System.out.printf("Preço:  R$%.2f\n", preco);
     }
     
 }

@@ -74,7 +74,7 @@ public class Pessoa {
         System.out.println("Endereço: "+endereco);
         System.out.println("Telefone: "+telefone);
         System.out.println("Email:    "+email);
-        System.out.println("Altura:   "+altura+" CM");
+        System.out.printf("Altura:   %.2f m\n", altura);
         System.out.println("Peso:     "+peso+" KG");
     }
 }
